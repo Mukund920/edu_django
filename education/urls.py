@@ -38,8 +38,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Catch-all route for React app - MUST be at the end
-# Regex avoids intercepting static, media, and api routes
+# Regex avoids intercepting static, media, api, and admin routes
 urlpatterns += [
-    re_path(r'^(?!static|media|api|admin).*$', react_app),
+    re_path(r'^(?!.*(?:admin/|api/|static/|media/)).*$', react_app),
 ]
 
