@@ -23,10 +23,10 @@ from app.views import CustomTokenObtainPairView, react_app
 from django.urls import re_path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('app.urls')),   # Connect app routes
-    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    re_path(r'^/*admin/', admin.site.urls),
+    re_path(r'^/*api/', include('app.urls')),   # Connect app routes
+    re_path(r'^/*api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    re_path(r'^/*api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 from django.conf import settings
