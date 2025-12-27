@@ -27,12 +27,19 @@ urlpatterns = [
     path('api/', include('app.urls')),   # Connect app routes
     path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    re_path(r'^.*$', react_app),
 ]
 
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Serve static and media files during development
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Catch-all route for React app - MUST be at the end
+# Regex avoids intercepting static, media, and api routes
+urlpatterns += [
+    re_path(r'^(?!static|media|api|admin).*$', react_app),
+]
 
